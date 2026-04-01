@@ -1,0 +1,1442 @@
+[
+    {
+        "date": "May 26 12:00 PM",
+        "eventNum": "Event#1",
+        "title": "WSOP Event #1: $550 No-Limit Hold'em Mini Mystery Millions - Flight A",
+        "buyIn": "$550",
+        "chips": "25,000",
+        "clock": "30/40",
+        "lateReg": "Level 10",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "May 26 02:00 PM",
+        "eventNum": "Event#2",
+        "title": "WSOP Event #2: $5,000 No-Limit Hold'em 8-Handed",
+        "buyIn": "$5,000",
+        "chips": "50,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "May 27 10:00 AM",
+        "eventNum": "Event#1",
+        "title": "WSOP Event #1: $550 No-Limit Hold'em Mini Mystery Millions - Flight B",
+        "buyIn": "$550",
+        "chips": "25,000",
+        "clock": "30/40",
+        "lateReg": "Level 10",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "May 27 12:00 PM",
+        "eventNum": "Event#3",
+        "title": "WSOP Event #3: $500 No-Limit Hold'em Employees Event",
+        "buyIn": "$500",
+        "chips": "25,000",
+        "clock": "40",
+        "lateReg": "9 Levels",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "May 27 02:00 PM",
+        "eventNum": "Event#4",
+        "title": "WSOP Event #4: $1,500 Omaha Hi-Lo 8 or Better",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "N/A"
+    },
+    {
+        "date": "May 28 10:00 AM",
+        "eventNum": "Event#1",
+        "title": "WSOP Event #1: $550 No-Limit Hold'em Mini Mystery Millions - Flight C",
+        "buyIn": "$550",
+        "chips": "25,000",
+        "clock": "30/40",
+        "lateReg": "Level 10",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "May 28 12:00 PM",
+        "eventNum": "Event#5",
+        "title": "WSOP Event #5: $5,000 Pot-Limit Omaha",
+        "buyIn": "$5,000",
+        "chips": "50,000",
+        "clock": "40/60",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "May 28 02:00 PM",
+        "eventNum": "Event#6",
+        "title": "WSOP Event #6: $1,500 Seven Card Stud",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "N/A"
+    },
+    {
+        "date": "May 29 10:00 AM",
+        "eventNum": "Event#1",
+        "title": "WSOP Event #1: $550 No-Limit Hold'em Mini Mystery Millions - Flight D",
+        "buyIn": "$550",
+        "chips": "25,000",
+        "clock": "30/40",
+        "lateReg": "Level 10",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "May 29 12:00 PM",
+        "eventNum": "Event#7",
+        "title": "WSOP Event #7: $25,000 No-Limit Hold'em Heads Up Championship - Flight A (64 player max per flight)",
+        "buyIn": "$25,000",
+        "chips": "150,000",
+        "clock": "20",
+        "lateReg": "First Draw",
+        "format": "Bust A Play B"
+    },
+    {
+        "date": "May 29 02:00 PM",
+        "eventNum": "Event#8",
+        "title": "WSOP Event #8: $1,500 Badugi",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "May 30 10:00 AM",
+        "eventNum": "Event#1",
+        "title": "WSOP Event #1: $550 No-Limit Hold'em Mini Mystery Millions - Flight E",
+        "buyIn": "$550",
+        "chips": "25,000",
+        "clock": "30/40",
+        "lateReg": "Level 10",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "May 30 12:00 PM",
+        "eventNum": "Event#7",
+        "title": "WSOP Event #7: $25,000 No-Limit Hold'em Heads Up Championship - Flight B (64 player max per flight)",
+        "buyIn": "$25,000",
+        "chips": "150,000",
+        "clock": "20",
+        "lateReg": "First Draw",
+        "format": "N/A"
+    },
+    {
+        "date": "May 30 02:00 PM",
+        "eventNum": "Event#9",
+        "title": "WSOP Event #9: $10,000 Omaha Hi-Lo 8 or Better Championship",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "40/60/90",
+        "lateReg": "Level 11",
+        "format": "N/A"
+    },
+    {
+        "date": "May 30 06:00 PM",
+        "eventNum": "Event#1",
+        "title": "WSOP Event #1: $550 No-Limit Hold'em Mini Mystery Millions - Flight F",
+        "buyIn": "$550",
+        "chips": "25,000",
+        "clock": "30/40",
+        "lateReg": "Level 10",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "May 31 10:00 AM",
+        "eventNum": "Event#10",
+        "title": "WSOP Event #10: $600 No-Limit Hold'em Deepstack",
+        "buyIn": "$600",
+        "chips": "30,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "May 31 12:00 PM",
+        "eventNum": "Event#11",
+        "title": "WSOP Event #11: $10,000 GGMillion$ No-Limit Hold'em High Roller - Flight A",
+        "buyIn": "$10,000",
+        "chips": "100,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "Unlimited Re-Entry"
+    },
+    {
+        "date": "May 31 02:00 PM",
+        "eventNum": "Event#12",
+        "title": "WSOP Event #12: $1,500 No-Limit 2-7 Lowball Draw",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 01 10:00 AM",
+        "eventNum": "Event#13",
+        "title": "WSOP Event #13: $1,500 No-Limit Hold'em 6-Handed",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 01 12:00 PM",
+        "eventNum": "Event#11",
+        "title": "WSOP Event #11: $10,000 GGMillion$ No-Limit Hold'em High Roller - Flight B",
+        "buyIn": "$10,000",
+        "chips": "100,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "Unlimited Re-Entry"
+    },
+    {
+        "date": "Jun 01 02:00 PM",
+        "eventNum": "Event#14",
+        "title": "WSOP Event #14: $1,500 Mixed: PLO Hi-Lo 8 or Better, Omaha Hi-Lo 8 or Better, Big O",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 02 10:00 AM",
+        "eventNum": "Event#15",
+        "title": "WSOP Event #15: $600 Pot-Limit Omaha Deepstack",
+        "buyIn": "$600",
+        "chips": "30,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 02 12:00 PM",
+        "eventNum": "Event#16",
+        "title": "WSOP Event #16: $1,700 No-Limit Hold'em U.S. WSOP Circuit Championship",
+        "buyIn": "$1,700",
+        "chips": "40,000",
+        "clock": "40/60",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 02 02:00 PM",
+        "eventNum": "Event#17",
+        "title": "WSOP Event #17: $10,000 No-Limit 2-7 Lowball Draw Championship",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "60/90",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 03 10:00 AM",
+        "eventNum": "Event#18",
+        "title": "WSOP Event #18: $1,500 No-Limit Hold'em Monster Stack - Flight A",
+        "buyIn": "$1,500",
+        "chips": "50,000",
+        "clock": "60",
+        "lateReg": "Level 11",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jun 03 12:00 PM",
+        "eventNum": "Event#19",
+        "title": "WSOP Event #19: $25,000 No-Limit Hold'em High Roller - Flight A",
+        "buyIn": "$25,000",
+        "chips": "150,000",
+        "clock": "60",
+        "lateReg": "Level 9",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 03 02:00 PM",
+        "eventNum": "Event#20",
+        "title": "WSOP Event #20: $1,500 Dealers Choice",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 04 10:00 AM",
+        "eventNum": "Event#18",
+        "title": "WSOP Event #18: $1,500 No-Limit Hold'em Monster Stack - Flight B",
+        "buyIn": "$1,500",
+        "chips": "50,000",
+        "clock": "60",
+        "lateReg": "Level 11",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jun 04 12:00 PM",
+        "eventNum": "Event#19",
+        "title": "WSOP Event #19: $25,000 No-Limit Hold'em High Roller - Flight B",
+        "buyIn": "$25,000",
+        "chips": "150,000",
+        "clock": "60",
+        "lateReg": "Level 9",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 04 02:00 PM",
+        "eventNum": "Event#21",
+        "title": "WSOP Event #21: $1,500 Pot-Limit Omaha Hi-Lo 8 or Better",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 05 10:00 AM",
+        "eventNum": "Event#18",
+        "title": "WSOP Event #18: $1,500 No-Limit Hold'em Monster Stack - Flight C",
+        "buyIn": "$1,500",
+        "chips": "50,000",
+        "clock": "60",
+        "lateReg": "Level 11",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jun 05 12:00 PM",
+        "eventNum": "Event#22",
+        "title": "WSOP Event #22: $1,500 Big O - Flight A",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "9 Levels",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jun 05 02:00 PM",
+        "eventNum": "Event#23",
+        "title": "WSOP Event #23: $10,000 Seven Card Stud Championship",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "40/60/90",
+        "lateReg": "Level 11",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 06 10:00 AM",
+        "eventNum": "Event#18",
+        "title": "WSOP Event #18: $1,500 No-Limit Hold'em Monster Stack - Flight D",
+        "buyIn": "$1,500",
+        "chips": "50,000",
+        "clock": "60",
+        "lateReg": "Level 11",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jun 06 12:00 PM",
+        "eventNum": "Event#24",
+        "title": "WSOP Event #24: $25,000 No-Limit Hold'em High Roller 6-Handed",
+        "buyIn": "$25,000",
+        "chips": "150,000",
+        "clock": "60",
+        "lateReg": "Level 9",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 06 02:00 PM",
+        "eventNum": "Event#22",
+        "title": "WSOP Event #22: $1,500 Big O - Flight B",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jun 07 10:00 AM",
+        "eventNum": "Event#25",
+        "title": "WSOP Event #25: $500 No-Limit Hold'em Freezeout",
+        "buyIn": "$500",
+        "chips": "25,000",
+        "clock": "30",
+        "lateReg": "Level 10",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 07 12:00 PM",
+        "eventNum": "Event#26",
+        "title": "WSOP Event #26: $2,000 No-Limit Hold'em",
+        "buyIn": "$2,000",
+        "chips": "30,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 07 02:00 PM",
+        "eventNum": "Event#27",
+        "title": "WSOP Event #27: $10,000 Dealers Choice Championship",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "40/60/90",
+        "lateReg": "Level 10",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 08 10:00 AM",
+        "eventNum": "Event#28",
+        "title": "WSOP Event #28: $600 No-Limit Hold'em/Pot-Limit Omaha Mixed Deepstack",
+        "buyIn": "$600",
+        "chips": "30,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 08 12:00 PM",
+        "eventNum": "Event#29",
+        "title": "WSOP Event #29: $50,000 No-Limit Hold'em High Roller",
+        "buyIn": "$50,000",
+        "chips": "300,000",
+        "clock": "60",
+        "lateReg": "Level 10",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 08 02:00 PM",
+        "eventNum": "Event#30",
+        "title": "WSOP Event #30: $1,500 Limit Hold'em",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 09 10:00 AM",
+        "eventNum": "Event#31",
+        "title": "WSOP Event #31: $1,500 No-Limit Hold'em Super Turbo Bounty",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "20",
+        "lateReg": "Level 10",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 09 12:00 PM",
+        "eventNum": "Event#32",
+        "title": "WSOP Event #32: $3,000 No-Limit Hold'em",
+        "buyIn": "$3,000",
+        "chips": "40,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 09 02:00 PM",
+        "eventNum": "Event#33",
+        "title": "WSOP Event #33: $10,000 Pot-Limit Omaha Hi-Lo 8 or Better Championship",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 10 10:00 AM",
+        "eventNum": "Event#34",
+        "title": "WSOP Event #34: $500 No-Limit Hold'em Colossus - Flight A",
+        "buyIn": "$500",
+        "chips": "50,000",
+        "clock": "40",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jun 10 12:00 PM",
+        "eventNum": "Event#35",
+        "title": "WSOP Event #35: $1,500 Pot-Limit Omaha - Flight A",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jun 10 01:00 PM",
+        "eventNum": "Event#36",
+        "title": "WSOP Event #36: $100,000 No-Limit Hold'em High Roller",
+        "buyIn": "$100,000",
+        "chips": "600,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 10 02:00 PM",
+        "eventNum": "Event#37",
+        "title": "WSOP Event #37: $1,500 HORSE",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 11 10:00 AM",
+        "eventNum": "Event#34",
+        "title": "WSOP Event #34: $500 No-Limit Hold'em Colossus - Flight B",
+        "buyIn": "$500",
+        "chips": "50,000",
+        "clock": "40",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jun 11 12:00 PM",
+        "eventNum": "Event#35",
+        "title": "WSOP Event #35: $1,500 Pot-Limit Omaha - Flight B",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jun 11 02:00 PM",
+        "eventNum": "Event#38",
+        "title": "WSOP Event #38: $10,000 Limit Hold'em Championship",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "40/60/90",
+        "lateReg": "Level 11",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 12 10:00 AM",
+        "eventNum": "Event#34",
+        "title": "WSOP Event #34: $500 No-Limit Hold'em Colossus - Flight C",
+        "buyIn": "$500",
+        "chips": "50,000",
+        "clock": "40",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jun 12 12:00 PM",
+        "eventNum": "Event#39",
+        "title": "WSOP Event #39: $5,000 No-Limit Hold'em Seniors High Roller",
+        "buyIn": "$5,000",
+        "chips": "50,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 12 02:00 PM",
+        "eventNum": "Event#40",
+        "title": "WSOP Event #40: $1,500 Razz",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 13 10:00 AM",
+        "eventNum": "Event#34",
+        "title": "WSOP Event #34: $500 No-Limit Hold'em Colossus - Flight D",
+        "buyIn": "$500",
+        "chips": "50,000",
+        "clock": "40",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jun 13 12:00 PM",
+        "eventNum": "Event#41",
+        "title": "WSOP Event #41: $250,000 No-Limit Hold'em Super High Roller",
+        "buyIn": "$250,000",
+        "chips": "1,500,000",
+        "clock": "60",
+        "lateReg": "Level 10",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 13 02:00 PM",
+        "eventNum": "Event#42",
+        "title": "WSOP Event #42: $10,000 Big O Championship",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 14 10:00 AM",
+        "eventNum": "Event#43",
+        "title": "WSOP Event #43: $800 No-Limit Hold'em Deepstack 8-Handed",
+        "buyIn": "$800",
+        "chips": "40,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 14 12:00 PM",
+        "eventNum": "Event#44",
+        "title": "WSOP Event #44: $10,000 No-Limit Hold'em Super Turbo Bounty",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "20",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 14 02:00 PM",
+        "eventNum": "Event#45",
+        "title": "WSOP Event #45: $2,500 Mixed Omaha Hi-Lo 8 or Better, Seven Card Stud hi-Lo 8 or Better",
+        "buyIn": "$2,500",
+        "chips": "35,000",
+        "clock": "40/60",
+        "lateReg": "Level 10",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 15 10:00 AM",
+        "eventNum": "Event#46",
+        "title": "WSOP Event #46: $1,000 No-Limit Hold'em Seniors Championship - Flight A",
+        "buyIn": "$1,000",
+        "chips": "20,000",
+        "clock": "60",
+        "lateReg": "Level 8",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jun 15 12:00 PM",
+        "eventNum": "Event#47",
+        "title": "WSOP Event #47: $25,000 Pot-Limit Omaha High Roller - Flight A",
+        "buyIn": "$25,000",
+        "chips": "150,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 15 02:00 PM",
+        "eventNum": "Event#48",
+        "title": "WSOP Event #48: $10,000 Razz Championship",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "40/60/90",
+        "lateReg": "Level 10",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 16 10:00 AM",
+        "eventNum": "Event#46",
+        "title": "WSOP Event #46: $1,000 No-Limit Hold'em Seniors Championship - Flight B",
+        "buyIn": "$1,000",
+        "chips": "20,000",
+        "clock": "60",
+        "lateReg": "Level 8",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jun 16 12:00 PM",
+        "eventNum": "Event#47",
+        "title": "WSOP Event #47: $25,000 Pot-Limit Omaha High Roller - Flight B",
+        "buyIn": "$25,000",
+        "chips": "150,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 16 02:00 PM",
+        "eventNum": "Event#49",
+        "title": "WSOP Event #49: $2,500 No-Limit Hold'em Freezeout",
+        "buyIn": "$2,500",
+        "chips": "35,000",
+        "clock": "40/60",
+        "lateReg": "Level 12",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 17 10:00 AM",
+        "eventNum": "Event#50",
+        "title": "WSOP Event #50: $1,500 No-Limit Hold'em Millionaire Maker - Flight A",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "60",
+        "lateReg": "Level 8",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jun 17 12:00 PM",
+        "eventNum": "Event#51",
+        "title": "WSOP Event #51: $10,000 No-Limit Hold'em Mystery Bounty",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "40",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 17 02:00 PM",
+        "eventNum": "Event#52",
+        "title": "WSOP Event #52: $3,000 Nine Game Mix",
+        "buyIn": "$3,000",
+        "chips": "40,000",
+        "clock": "40/60",
+        "lateReg": "Level 10",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 18 10:00 AM",
+        "eventNum": "Event#50",
+        "title": "WSOP Event #50: $1,500 No-Limit Hold'em Millionaire Maker - Flight B",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "60",
+        "lateReg": "Level 8",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jun 18 12:00 PM",
+        "eventNum": "Event#53",
+        "title": "WSOP Event #53: $1,500 Five Card Pot-Limit Omaha",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 18 02:00 PM",
+        "eventNum": "Event#54",
+        "title": "WSOP Event #54: $10,000 HORSE Championship",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "40/60/90",
+        "lateReg": "Level 11",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 19 10:00 AM",
+        "eventNum": "Event#50",
+        "title": "WSOP Event #50: $1,500 No-Limit Hold'em Millionaire Maker - Flight C",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "60",
+        "lateReg": "Level 8",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jun 19 12:00 PM",
+        "eventNum": "Event#55",
+        "title": "WSOP Event #55: $50,000 Pot-Limit Omaha High Roller",
+        "buyIn": "$50,000",
+        "chips": "300,000",
+        "clock": "40/60",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 19 02:00 PM",
+        "eventNum": "Event#56",
+        "title": "WSOP Event #56: $3,000 No-Limit Hold'em 6-Handed",
+        "buyIn": "$3,000",
+        "chips": "40,000",
+        "clock": "30/40",
+        "lateReg": "Level 11",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 20 10:00 AM",
+        "eventNum": "Event#50",
+        "title": "WSOP Event #50: $1,500 No-Limit Hold'em Millionaire Maker - Flight D",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "60",
+        "lateReg": "Level 8",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jun 20 12:00 PM",
+        "eventNum": "Event#57",
+        "title": "WSOP Event #57: $1,000 Pot-Limit Omaha - Flight A",
+        "buyIn": "$1,000",
+        "chips": "20,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 20 02:00 PM",
+        "eventNum": "Event#58",
+        "title": "WSOP Event #58: $1,500 Limit 2-7 Lowball Triple Draw",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 21 10:00 AM",
+        "eventNum": "Event#59",
+        "title": "WSOP Event #59: $500 No-Limit Hold'em Salute To Warriors",
+        "buyIn": "$500",
+        "chips": "50,000",
+        "clock": "40",
+        "lateReg": "Level 9",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 21 12:00 PM",
+        "eventNum": "Event#57",
+        "title": "WSOP Event #57: $1,000 Pot-Limit Omaha - Flight B",
+        "buyIn": "$1,000",
+        "chips": "20,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 21 02:00 PM",
+        "eventNum": "Event#60",
+        "title": "WSOP Event #60: $50,000 Poker Players Championship",
+        "buyIn": "$50,000",
+        "chips": "300,000",
+        "clock": "100",
+        "lateReg": "Level 9",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 22 10:00 AM",
+        "eventNum": "Event#61",
+        "title": "WSOP Event #61: $1,000 No-Limit Hold'em Super Seniors",
+        "buyIn": "$1,000",
+        "chips": "20,000",
+        "clock": "60",
+        "lateReg": "Level 8",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 22 12:00 PM",
+        "eventNum": "Event#57",
+        "title": "WSOP Event #57: $1,000 Pot-Limit Omaha - Flight C",
+        "buyIn": "$1,000",
+        "chips": "20,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 22 02:00 PM",
+        "eventNum": "Event#62",
+        "title": "WSOP Event #62: $2,500 No-Limit Hold'em",
+        "buyIn": "$2,500",
+        "chips": "35,000",
+        "clock": "40/60",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 23 10:00 AM",
+        "eventNum": "Event#63",
+        "title": "WSOP Event #63: $1,000 No-Limit Hold'em Mystery Millions - Flight A",
+        "buyIn": "$1,000",
+        "chips": "40,000",
+        "clock": "30/40",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jun 23 12:00 PM",
+        "eventNum": "Event#64",
+        "title": "WSOP Event #64: $25,000 PLO/NLH Mixed High Roller",
+        "buyIn": "$25,000",
+        "chips": "150,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 23 02:00 PM",
+        "eventNum": "Event#65",
+        "title": "WSOP Event #65: $1,500 No-Limit Hold'em Freezeout",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 24 10:00 AM",
+        "eventNum": "Event#63",
+        "title": "WSOP Event #63: $1,000 No-Limit Hold'em Mystery Millions - Flight B",
+        "buyIn": "$1,000",
+        "chips": "40,000",
+        "clock": "30/40",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jun 24 12:00 PM",
+        "eventNum": "Event#66",
+        "title": "WSOP Event #66: $1,000 No-Limit Hold'em Tag Team",
+        "buyIn": "$1,000",
+        "chips": "20,000",
+        "clock": "60",
+        "lateReg": "Level 8",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 24 02:00 PM",
+        "eventNum": "Event#67",
+        "title": "WSOP Event #67: $10,000 Limit 2-7 Lowball Triple Draw Championship",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "40/60/90",
+        "lateReg": "Level 11",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 25 10:00 AM",
+        "eventNum": "Event#63",
+        "title": "WSOP Event #63: $1,000 No-Limit Hold'em Mystery Millions - Flight C",
+        "buyIn": "$1,000",
+        "chips": "40,000",
+        "clock": "30/40",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jun 25 12:00 PM",
+        "eventNum": "Event#68",
+        "title": "WSOP #68: $1,000 No-Limit Hold'em Ladies Championship",
+        "buyIn": "$1,000",
+        "chips": "20,000",
+        "clock": "60",
+        "lateReg": "Level 8",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 25 02:00 PM",
+        "eventNum": "Event#69",
+        "title": "WSOP Event #69: $1,500 Seven Card Stud Hi-Lo 8 or Better",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 26 10:00 AM",
+        "eventNum": "Event#63",
+        "title": "WSOP Event #63: $1,000 No-Limit Hold'em Mystery Millions - Flight D",
+        "buyIn": "$1,000",
+        "chips": "40,000",
+        "clock": "30/40",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jun 26 02:00 PM",
+        "eventNum": "Event#70",
+        "title": "WSOP Event #70: $10,000 Pot-Limit Omaha Championship",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 27 10:00 AM",
+        "eventNum": "Event#63",
+        "title": "WSOP Event #63: $1,000 No-Limit Hold'em Mystery Millions - Flight E",
+        "buyIn": "$1,000",
+        "chips": "40,000",
+        "clock": "30/40",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jun 27 02:00 PM",
+        "eventNum": "Event#71",
+        "title": "WSOP Event #71: $2,500 Mixed Big Bet 7-Handed",
+        "buyIn": "$2,500",
+        "chips": "35,000",
+        "clock": "40/60",
+        "lateReg": "Level 10",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 27 06:00 PM",
+        "eventNum": "Event#63",
+        "title": "WSOP Event #63: $1,000 No-Limit Hold'em Mystery Millions - Flight F",
+        "buyIn": "$1,000",
+        "chips": "40,000",
+        "clock": "20/40",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jun 28 10:00 AM",
+        "eventNum": "Event#72",
+        "title": "WSOP Event #72: $1,000 No-Limit Hold'em Mini Main Event - Flight A",
+        "buyIn": "$1,000",
+        "chips": "60,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "Bust A Play B"
+    },
+    {
+        "date": "Jun 28 12:00 PM",
+        "eventNum": "Event#73",
+        "title": "WSOP Event #73: $5,000 No-Limit Hold'em 6-Handed",
+        "buyIn": "$5,000",
+        "chips": "50,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 28 02:00 PM",
+        "eventNum": "Event#74",
+        "title": "WSOP Event #74: $1,500 8-Game Mixed",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jun 29 10:00 AM",
+        "eventNum": "Event#72",
+        "title": "WSOP Event #72: $1,000 No-Limit Hold'em Mini Main Event - Flight B",
+        "buyIn": "$1,000",
+        "chips": "60,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "Bust B Play C"
+    },
+    {
+        "date": "Jun 29 02:00 PM",
+        "eventNum": "Event#75",
+        "title": "WSOP Event #75: $10,000 Seven Card Stud Hi-Lo 8 or Better Championship",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "40/60/90",
+        "lateReg": "Level 11",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 30 10:00 AM",
+        "eventNum": "Event#72",
+        "title": "WSOP Event #72: $1,000 No-Limit Hold'em Mini Main Event - Flight C",
+        "buyIn": "$1,000",
+        "chips": "60,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "N/A"
+    },
+    {
+        "date": "Jun 30 12:00 PM",
+        "eventNum": "Event#76",
+        "title": "WSOP Event #76: $100,000 Pot-Limit Omaha High Roller",
+        "buyIn": "$100,000",
+        "chips": "600,000",
+        "clock": "40",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jun 30 02:00 PM",
+        "eventNum": "Event#77",
+        "title": "WSOP Event #77: $2,500 Mixed Triple Draw Lowball",
+        "buyIn": "$2,500",
+        "chips": "35,000",
+        "clock": "40/60",
+        "lateReg": "Level 8",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jul 01 10:00 AM",
+        "eventNum": "Event#78",
+        "title": "WSOP Event #78: $600 No-Limit Hold'em Deepstack Championship",
+        "buyIn": "$600",
+        "chips": "30,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jul 01 12:00 PM",
+        "eventNum": "Event#79",
+        "title": "WSOP Event #79: $3,000 No-Limit Hold'em Freezeout",
+        "buyIn": "$3,000",
+        "chips": "40,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "N/A"
+    },
+    {
+        "date": "Jul 01 02:00 PM",
+        "eventNum": "Event#80",
+        "title": "WSOP Event #80: $10,000 8-Game Mixed Championship",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "40/60/90",
+        "lateReg": "Level 11",
+        "format": "N/A"
+    },
+    {
+        "date": "Jul 02 10:00 AM",
+        "eventNum": "Event#81",
+        "title": "WSOP Event #81: $800 No-Limit Hold'em Summer Celebration - Flight A",
+        "buyIn": "$800",
+        "chips": "40,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jul 02 11:00 AM",
+        "eventNum": "Event#82",
+        "title": "WSOP Event #82: $10,000 WSOP No-Limit Hold'em Main Event - Flight A",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "120",
+        "lateReg": "Level 7",
+        "format": "N/A"
+    },
+    {
+        "date": "Jul 02 02:00 PM",
+        "eventNum": "Event#83",
+        "title": "WSOP Event #83: $1,500 Pot-Limit Omaha Double Board Bomb Pot",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jul 03 10:00 AM",
+        "eventNum": "Event#81",
+        "title": "WSOP Event #81: $800 No-Limit Hold'em Summer Celebration - Flight B",
+        "buyIn": "$800",
+        "chips": "40,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jul 03 11:00 AM",
+        "eventNum": "Event#82",
+        "title": "WSOP Event #82: $10,000 WSOP No-Limit Hold'em Main Event - Flight B",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "120",
+        "lateReg": "Level 7",
+        "format": "N/A"
+    },
+    {
+        "date": "Jul 03 02:00 PM",
+        "eventNum": "Event#84",
+        "title": "WSOP Event #84: $5,000 No-Limit Hold'em Super Turbo Bounty",
+        "buyIn": "$5,000",
+        "chips": "50,000",
+        "clock": "20",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jul 04 10:00 AM",
+        "eventNum": "Event#85",
+        "title": "WSOP Event #85: $1,000 No-Limit Hold'em",
+        "buyIn": "$1,000",
+        "chips": "20,000",
+        "clock": "30",
+        "lateReg": "Level 10",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jul 04 11:00 AM",
+        "eventNum": "Event#82",
+        "title": "WSOP Event #82: $10,000 WSOP No-Limit Hold'em Main Event - Flight C",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "120",
+        "lateReg": "Level 7",
+        "format": "N/A"
+    },
+    {
+        "date": "Jul 05 10:00 AM",
+        "eventNum": "Event#86",
+        "title": "WSOP Event #86: $600 No-Limit Hold'em Ultra Stack - Flight A",
+        "buyIn": "$600",
+        "chips": "60,000",
+        "clock": "30/40",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jul 05 11:00 AM",
+        "eventNum": "Event#82",
+        "title": "WSOP Event #82: $10,000 WSOP No-Limit Hold'em Main Event - Flight D",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "120",
+        "lateReg": "Level 7",
+        "format": "N/A"
+    },
+    {
+        "date": "Jul 06 10:00 AM",
+        "eventNum": "Event#86",
+        "title": "WSOP Event #86: $600 No-Limit Hold'em Ultra Stack - Flight B",
+        "buyIn": "$600",
+        "chips": "60,000",
+        "clock": "30/40",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jul 07 10:00 AM",
+        "eventNum": "Event#86",
+        "title": "WSOP Event #86: $600 No-Limit Hold'em Ultra Stack - Flight C",
+        "buyIn": "$600",
+        "chips": "60,000",
+        "clock": "30/40",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jul 07 02:00 PM",
+        "eventNum": "Event#87",
+        "title": "WSOP Event #87: $1,000 Pot-Limit Omaha Mystery Bounty - Flight A",
+        "buyIn": "$1,000",
+        "chips": "40,000",
+        "clock": "40",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jul 08 10:00 AM",
+        "eventNum": "Event#88",
+        "title": "WSOP Event #88: $300 No-Limit Hold'em Gladiators of Poker - Flight A",
+        "buyIn": "$300",
+        "chips": "30,000",
+        "clock": "30/40",
+        "lateReg": "Level 11",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jul 08 12:00 PM",
+        "eventNum": "Event#89",
+        "title": "WSOP Event #89: $3,000 No-Limit Hold'em Mid-Stakes Championship - Flight A",
+        "buyIn": "$3,000",
+        "chips": "40,000",
+        "clock": "60",
+        "lateReg": "Level 11",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jul 08 02:00 PM",
+        "eventNum": "Event#87",
+        "title": "WSOP Event #87: $1,000 Pot-Limit Omaha Mystery Bounty - Flight B",
+        "buyIn": "$1,000",
+        "chips": "40,000",
+        "clock": "40",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jul 09 10:00 AM",
+        "eventNum": "Event#88",
+        "title": "WSOP Event #88: $300 No-Limit Hold'em Gladiators of Poker - Flight B",
+        "buyIn": "$300",
+        "chips": "30,000",
+        "clock": "30/40",
+        "lateReg": "Level 11",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jul 09 12:00 PM",
+        "eventNum": "Event#89",
+        "title": "WSOP Event #89: $3,000 No-Limit Hold'em Mid-Stakes Championship - Flight B",
+        "buyIn": "$3,000",
+        "chips": "40,000",
+        "clock": "60",
+        "lateReg": "Level 11",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jul 09 01:00 PM",
+        "eventNum": "Event#90",
+        "title": "WSOP Event #90: $50,000 No-Limit Hold'em High Roller",
+        "buyIn": "$50,000",
+        "chips": "300,000",
+        "clock": "60",
+        "lateReg": "Level 10",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jul 09 02:00 PM",
+        "eventNum": "Event#91",
+        "title": "WSOP Event #91: $1,500 Pick Your PLO",
+        "buyIn": "$1,500",
+        "chips": "25,000",
+        "clock": "40/60",
+        "lateReg": "Level 9",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jul 10 10:00 AM",
+        "eventNum": "Event#88",
+        "title": "WSOP Event #88: $300 No-Limit Hold'em Gladiators of Poker - Flight C",
+        "buyIn": "$300",
+        "chips": "30,000",
+        "clock": "30/40",
+        "lateReg": "Level 11",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jul 10 12:00 PM",
+        "eventNum": "Event#89",
+        "title": "WSOP Event #89: $3,000 No-Limit Hold'em Mid-Stakes Championship - Flight C",
+        "buyIn": "$3,000",
+        "chips": "40,000",
+        "clock": "60",
+        "lateReg": "Level 11",
+        "format": "1 Re-Entry Per Flight"
+    },
+    {
+        "date": "Jul 10 02:00 PM",
+        "eventNum": "Event#92",
+        "title": "WSOP Event #92: $3,000 TORSE",
+        "buyIn": "$3,000",
+        "chips": "40,000",
+        "clock": "60",
+        "lateReg": "Level 10",
+        "format": "N/A"
+    },
+    {
+        "date": "Jul 11 10:00 AM",
+        "eventNum": "Event#88",
+        "title": "WSOP Event #88: $300 No-Limit Hold'em Gladiators of Poker - Flight D",
+        "buyIn": "$300",
+        "chips": "30,000",
+        "clock": "30/40",
+        "lateReg": "Level 11",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jul 11 12:00 PM",
+        "eventNum": "Event#93",
+        "title": "WSOP Event #93: $1,500 No-Limit Hold'em The Closer - Flight A",
+        "buyIn": "$1,500",
+        "chips": "50,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "Unlimited Re-Entry"
+    },
+    {
+        "date": "Jul 11 02:00 PM",
+        "eventNum": "Event#94",
+        "title": "WSOP Event #94: $10,000 No-Limit Hold'em 6-Handed Championship",
+        "buyIn": "$10,000",
+        "chips": "60,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "N/A"
+    },
+    {
+        "date": "Jul 12 10:00 AM",
+        "eventNum": "Event#95",
+        "title": "WSOP Event #95: $500 No-Limit Hold'em Summer Saver - Flight A",
+        "buyIn": "$500",
+        "chips": "50,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jul 12 12:00 PM",
+        "eventNum": "Event#93",
+        "title": "WSOP Event #93: $1,500 No-Limit Hold'em The Closer - Flight B",
+        "buyIn": "$1,500",
+        "chips": "50,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "Unlimited Re-Entry"
+    },
+    {
+        "date": "Jul 12 02:00 PM",
+        "eventNum": "Event#96",
+        "title": "WSOP Event #96: $3,000 Pot-Limit Omaha 6-Handed",
+        "buyIn": "$3,000",
+        "chips": "40,000",
+        "clock": "40/60",
+        "lateReg": "Level 8",
+        "format": "2 Re-Entries"
+    },
+    {
+        "date": "Jul 13 10:00 AM",
+        "eventNum": "Event#95",
+        "title": "WSOP Event #95: $500 No-Limit Hold'em Summer Saver - Flight B",
+        "buyIn": "$500",
+        "chips": "50,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "2 Re-Entries Per Flight"
+    },
+    {
+        "date": "Jul 13 02:00 PM",
+        "eventNum": "Event#97",
+        "title": "WSOP Event #97: $25,000 HORSE High Roller",
+        "buyIn": "$25,000",
+        "chips": "150,000",
+        "clock": "60",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jul 14 10:00 AM",
+        "eventNum": "Event#98",
+        "title": "WSOP Event #98: $800 No-Limit Hold'em Deepstack",
+        "buyIn": "$800",
+        "chips": "40,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jul 14 02:00 PM",
+        "eventNum": "Event#99",
+        "title": "WSOP Event #99: $5,000 No-Limit Hold'em 8-Handed",
+        "buyIn": "$5,000",
+        "chips": "50,000",
+        "clock": "30",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry"
+    },
+    {
+        "date": "Jul 15 10:00 AM",
+        "eventNum": "Event#100",
+        "title": "WSOP Event #100: $1,000 No-Limit Hold'em Super Turbo",
+        "buyIn": "$1,000",
+        "chips": "20,000",
+        "clock": "20",
+        "lateReg": "Level 12",
+        "format": "1 Re-Entry"
+    }
+]
