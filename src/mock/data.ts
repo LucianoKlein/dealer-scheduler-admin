@@ -165,7 +165,7 @@ function generateAvailabilityRequests(dealers: Dealer[]): AvailabilityRequest[] 
   const prefs: ShiftPreference[] = ['prefer_day', 'prefer_swing', 'no_preference'];
   const selected = dealers.filter(() => Math.random() < 0.15);
   return selected.map((d, i) => {
-    // 随机选2天作为期望休息日
+    // Randomly pick 2 days as preferred days off
     const day1 = Math.floor(Math.random() * 7);
     let day2 = Math.floor(Math.random() * 7);
     while (day2 === day1) day2 = Math.floor(Math.random() * 7);

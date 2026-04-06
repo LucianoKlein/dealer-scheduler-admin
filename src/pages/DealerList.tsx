@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import {
-  Table, Button, Input, Select, Space, Drawer, Form, Tag, Popconfirm, message, Card,
+  Table, Button, Input, Select, Space, Drawer, Form, Tag, Popconfirm, message, Card, Empty,
 } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, TeamOutlined, CalendarOutlined, IdcardOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
@@ -90,7 +90,7 @@ const DealerList: React.FC = () => {
   };
 
   const columns: ColumnsType<DealerDTO> = [
-    { title: 'EE Number', dataIndex: 'id', width: 90, sorter: (a, b) => a.id.localeCompare(b.id) },
+    { title: 'EE Number', dataIndex: 'eeNumber', width: 90, sorter: (a, b) => (a.eeNumber || '').localeCompare(b.eeNumber || '') },
     { title: 'Name', width: 160, render: (_, r) => `${r.firstName} ${r.lastName}`, sorter: (a, b) => a.lastName.localeCompare(b.lastName) },
     {
       title: 'Type', dataIndex: 'type', width: 120,
@@ -183,20 +183,25 @@ const DealerList: React.FC = () => {
         </Card>
       </div>
 
-      <Table
-        columns={columns}
-        dataSource={dealers}
-        rowKey="id"
-        size="small"
-        loading={loading}
-        scroll={{ x: 800 }}
-        pagination={{
-          current: page, pageSize, total,
-          showSizeChanger: true,
-          showTotal: t => `${t} dealers`,
-          onChange: (p, s) => { setPage(p); setPageSize(s); },
-        }}
-      />
+      {!loading && dealers.length === 0 ? (
+        <Empty description="No dealers found" style={{ padding: 60 }} />
+      ) : (
+        <Table
+          columns={columns}
+          dataSource={dealers}
+          rowKey="id"
+          size="small"
+          loading={loading}
+          scroll={{ x: 800 }}
+          pagination={{
+            current: page, pageSize, total,
+            showSizeChanger: true,
+            pageSizeOptions: ['20', '50', '100', '200'],
+            showTotal: t => `${t} dealers`,
+            onChange: (p, s) => { setPage(p); setPageSize(s); },
+          }}
+        />
+      )}
 
       <Drawer
         title={editingDealer ? 'Edit Dealer' : 'Add Dealer'}

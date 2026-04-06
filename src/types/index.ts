@@ -77,7 +77,7 @@ export const EMPLOYMENT_KEYS: Record<Employment, string> = {
 export interface WeeklyAvailability {
   dealerId: string;
   weekStart: string;
-  slots: string[]; // "YYYY-MM-DD" 日期数组
+  slots: string[]; // "YYYY-MM-DD" date array
   submittedAt: string;
 }
 
@@ -88,12 +88,12 @@ export interface AvailabilitySubmission {
   dealerId: string;
   dealerName: string;
   weekStart: string;
-  dates: string[]; // 可用日期列表
+  dates: string[]; // available dates list
   submittedAt: string;
   status: SubmissionStatus;
 }
 
-// 员工需求管理 - 匹配 user 端提交模型
+// Employee request management - matches user-side submission model
 export type ShiftType = 'day' | 'swing' | 'mixed';
 export type ShiftPreference = 'prefer_day' | 'prefer_swing' | 'no_preference';
 
@@ -104,7 +104,7 @@ export interface AvailabilityRequest {
   weekStart: string;
   shift: ShiftType;
   preference: ShiftPreference;
-  preferredDaysOff: number[]; // 0=Sun..6=Sat, 期望休息日
+  preferredDaysOff: number[]; // 0=Sun..6=Sat, preferred days off
   submittedAt: string;
   status: SubmissionStatus;
 }

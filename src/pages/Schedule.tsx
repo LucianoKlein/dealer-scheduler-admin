@@ -1,41 +1,53 @@
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
-import { Table, Tabs, Card, Tag, Spin, message, Popover, Button } from 'antd';
+import { Table, Tabs, Card, Tag, Spin, message, Popover, Popconfirm, Button, Tooltip, Input, Empty, Select } from 'antd';
 import {
-  CalendarOutlined, TeamOutlined, ClockCircleOutlined, DownloadOutlined,
+  CalendarOutlined, TeamOutlined, ClockCircleOutlined, DownloadOutlined, DeleteOutlined,
+  WarningOutlined, SortAscendingOutlined, SortDescendingOutlined,
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { DealerType } from '../types';
 import { useWeek } from '../contexts/WeekContext';
 import WeekPicker from '../components/WeekPicker';
 import { dealersApi, DealerDTO } from '../api/dealers';
-import { scheduleApi } from '../api/schedule';
+import { scheduleApi, adminRequestsApi } from '../api/schedule';
 import { timeOffApi } from '../api/timeOff';
+import { projectionApi } from '../api/projection';
 
 interface ScheduleEntryDTO { dealerId: string; date: string; shift: string; }
 interface TimeOffDTO { id: string; dealerId: string; startDate: string; endDate: string; status: string; }
 interface AvailDTO { shift: string; preferredDaysOff: number[]; }
 
 const Schedule: React.FC = () => {
-  const { weekStart, weekStartStr } = useWeek();
+  const { weekStart, weekStartStr, weekEndStr } = useWeek();
   const [activeTab, setActiveTab] = useState<DealerType>('tournament');
   const [dealers, setDealers] = useState<DealerDTO[]>([]);
   const [entries, setEntries] = useState<ScheduleEntryDTO[]>([]);
   const [timeOffs, setTimeOffs] = useState<TimeOffDTO[]>([]);
   const [loading, setLoading] = useState(false);
   const [downloading, setDownloading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(50);
+  const [searchText, setSearchText] = useState('');
+  const [shiftFilter, setShiftFilter] = useState<string | null>(null);
+  const [eeSortOrder, setEeSortOrder] = useState<'asc' | 'desc' | null>(null);
+  const [projectionData, setProjectionData] = useState<{ date: string; slots: { time: string; dealersNeeded: number }[] }[]>([]);
 
-  // Lazy-loaded availability cache: dealerId -> AvailDTO | null | 'loading'
+  // Batch-loaded availability map: dealerId -> AvailDTO
+  const [availMap, setAvailMap] = useState<Map<string, AvailDTO>>(new Map());
+
+  // Lazy-loaded availability cache for popover (dealers not in batch result)
   const [availCache, setAvailCache] = useState<Map<string, AvailDTO | null | 'loading'>>(new Map());
   const availCacheRef = useRef(availCache);
   availCacheRef.current = availCache;
 
   // Reset cache when week changes
-  useEffect(() => { setAvailCache(new Map()); }, [weekStartStr]);
+  useEffect(() => { setAvailCache(new Map()); setAvailMap(new Map()); }, [weekStartStr]);
 
-  const fetchAvailability = useCallback((dealerId: string) => {
+  const fetchAvailability = useCallback((dealerId: string, eeNumber: string | null) => {
     if (availCacheRef.current.has(dealerId)) return;
+    if (!eeNumber) { setAvailCache(prev => new Map(prev).set(dealerId, null)); return; }
     setAvailCache(prev => new Map(prev).set(dealerId, 'loading'));
-    dealersApi.availability(dealerId, weekStartStr).then(res => {
+    dealersApi.availability(eeNumber, weekStartStr).then(res => {
       const list = res.data as any[];
       const avail = list.length > 0 ? { shift: list[0].shift, preferredDaysOff: list[0].preferredDaysOff || [] } : null;
       setAvailCache(prev => new Map(prev).set(dealerId, avail));
@@ -47,10 +59,12 @@ const Schedule: React.FC = () => {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const [dealerRes, schedRes, toRes] = await Promise.all([
+      const [dealerRes, schedRes, toRes, projRes, availRes] = await Promise.all([
         dealersApi.list({ type: activeTab, size: 10000 }),
         scheduleApi.list({ week_start: weekStartStr, dealer_type: activeTab }),
         timeOffApi.list({ week_start: weekStartStr, status: 'approved' }),
+        projectionApi.get(weekStartStr).catch(() => ({ data: { days: [] } })),
+        adminRequestsApi.availability(weekStartStr, 1, 10000).catch(() => ({ data: { data: [], total: 0 } })),
       ]);
       setDealers(dealerRes.data.data);
       const allEntries: ScheduleEntryDTO[] = [];
@@ -59,6 +73,13 @@ const Schedule: React.FC = () => {
       });
       setEntries(allEntries);
       setTimeOffs(toRes.data as TimeOffDTO[]);
+      setProjectionData(projRes.data.days || []);
+      // Build availability map from batch result
+      const aMap = new Map<string, AvailDTO>();
+      ((availRes.data.data || availRes.data) as any[]).forEach((a: any) => {
+        aMap.set(a.dealerId, { shift: a.shift, preferredDaysOff: a.preferredDaysOff || [] });
+      });
+      setAvailMap(aMap);
     } catch {
       message.error('Failed to load schedule data');
     } finally {
@@ -100,8 +121,31 @@ const Schedule: React.FC = () => {
   const filteredDealers = useMemo(() => {
     if (entries.length === 0) return [];
     const scheduledIds = new Set(entries.map(e => e.dealerId));
-    return dealers.filter(d => scheduledIds.has(d.id));
-  }, [dealers, entries]);
+    let list = dealers.filter(d => scheduledIds.has(d.id));
+    if (searchText) {
+      const s = searchText.toLowerCase();
+      list = list.filter(d =>
+        d.firstName.toLowerCase().includes(s) ||
+        d.lastName.toLowerCase().includes(s) ||
+        (d.eeNumber || '').toLowerCase().includes(s)
+      );
+    }
+    // Shift type filter: only show dealers who have at least one entry matching the selected shift
+    if (shiftFilter) {
+      const shiftValue = shiftFilter === 'day' ? '9AM' : '4PM';
+      const matchingDealerIds = new Set(entries.filter(e => e.shift === shiftValue).map(e => e.dealerId));
+      list = list.filter(d => matchingDealerIds.has(d.id));
+    }
+    // EE Number sort
+    if (eeSortOrder) {
+      list = [...list].sort((a, b) => {
+        const eeA = a.eeNumber || '';
+        const eeB = b.eeNumber || '';
+        return eeSortOrder === 'asc' ? eeA.localeCompare(eeB) : eeB.localeCompare(eeA);
+      });
+    }
+    return list;
+  }, [dealers, entries, searchText, shiftFilter, eeSortOrder]);
 
   // Summary stats
   const totalAssigned = entries.length;
@@ -115,20 +159,114 @@ const Schedule: React.FC = () => {
     return count;
   }, [filteredDealers, weekDates, timeOffSet]);
 
+  // Shortage calculation: compare projection demand vs actual assigned
+  const shortages = useMemo(() => {
+    if (projectionData.length === 0 || entries.length === 0) return [];
+    const result: { date: string; shift: string; needed: number; assigned: number; short: number }[] = [];
+    // Build demand map from projection: date+shift -> dealersNeeded
+    const demandMap = new Map<string, number>();
+    projectionData.forEach(day => {
+      (day.slots || []).forEach(slot => {
+        const timeStr = slot.time.toUpperCase().replace(/\s+/g, '');
+        // Match backend logic: time contains 9/10/11/12 -> 9AM, otherwise -> 4PM
+        const shift = /(?:^|\D)(9|10|11|12)(?:\D|$)/.test(timeStr) ? '9AM' : '4PM';
+        const key = `${day.date}_${shift}`;
+        demandMap.set(key, (demandMap.get(key) || 0) + slot.dealersNeeded);
+      });
+    });
+    // Build assigned count map: date+shift -> count
+    const assignedMap = new Map<string, number>();
+    entries.forEach(e => {
+      const key = `${e.date}_${e.shift}`;
+      assignedMap.set(key, (assignedMap.get(key) || 0) + 1);
+    });
+    // Compare
+    demandMap.forEach((needed, key) => {
+      const assigned = assignedMap.get(key) || 0;
+      if (assigned < needed) {
+        const [dateStr, shift] = key.split('_');
+        result.push({ date: dateStr, shift, needed, assigned, short: needed - assigned });
+      }
+    });
+    result.sort((a, b) => a.date.localeCompare(b.date) || a.shift.localeCompare(b.shift));
+    return result;
+  }, [projectionData, entries]);
+
   const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const SHIFT_LABELS: Record<string, string> = { day: 'Day (AM)', swing: 'Swing (PM)', mixed: 'Mixed' };
+  const SHIFT_MAP: Record<string, string> = { '9AM': 'day', '4PM': 'swing' };
+
+  // Per-dealer satisfaction calculation
+  const satisfactionMap = useMemo(() => {
+    const map = new Map<string, {
+      score: number;
+      shiftScore: number;
+      daysOffScore: number;
+      shiftPref: string;
+      matchedShifts: number;
+      totalShifts: number;
+      violatedDaysOff: { day: number; date: string }[];
+      preferredDaysOff: number[];
+    }>();
+    if (entries.length === 0) return map;
+    filteredDealers.forEach(d => {
+      const avail = availMap.get(d.id);
+      if (!avail) return;
+      const dealerEntries = entries.filter(e => e.dealerId === d.id);
+      if (dealerEntries.length === 0) return;
+
+      // Shift match
+      const matchedShifts = dealerEntries.filter(e => SHIFT_MAP[e.shift] === avail.shift).length;
+      const shiftScore = matchedShifts / dealerEntries.length;
+
+      // Days off match
+      let daysOffScore = 1;
+      const violatedDaysOff: { day: number; date: string }[] = [];
+      if (avail.preferredDaysOff.length > 0) {
+        const scheduledDays = new Map<number, string>();
+        dealerEntries.forEach(e => scheduledDays.set(dayjs(e.date).day(), e.date));
+        avail.preferredDaysOff.forEach(day => {
+          if (scheduledDays.has(day)) {
+            violatedDaysOff.push({ day, date: scheduledDays.get(day)! });
+          }
+        });
+        const satisfied = avail.preferredDaysOff.length - violatedDaysOff.length;
+        daysOffScore = satisfied / avail.preferredDaysOff.length;
+      }
+
+      const score = Math.round((shiftScore + daysOffScore) / 2 * 100);
+      map.set(d.id, {
+        score, shiftScore, daysOffScore,
+        shiftPref: avail.shift,
+        matchedShifts, totalShifts: dealerEntries.length,
+        violatedDaysOff, preferredDaysOff: avail.preferredDaysOff,
+      });
+    });
+    return map;
+  }, [filteredDealers, entries, availMap]);
 
   const renderDealerPopover = (record: DealerDTO) => {
-    const cached = availCache.get(record.id);
+    const cached: AvailDTO | null | 'loading' | undefined = availMap.get(record.id) || availCache.get(record.id);
     const dealerEntries = entries.filter(e => e.dealerId === record.id);
     const totalDays = dealerEntries.length;
     const shifts = [...new Set(dealerEntries.map(e => e.shift))];
+
+    // Time-off dates for this dealer
+    const dealerTimeOffs = timeOffs.filter(t => t.dealerId === record.id);
+    const timeOffDates: string[] = [];
+    dealerTimeOffs.forEach(t => {
+      let cur = dayjs(t.startDate);
+      const end = dayjs(t.endDate);
+      while (cur.isBefore(end, 'day') || cur.isSame(end, 'day')) {
+        timeOffDates.push(cur.format('MM/DD (ddd)'));
+        cur = cur.add(1, 'day');
+      }
+    });
 
     return (
       <div style={{ minWidth: 200, fontSize: 13 }}>
         <div style={{ fontWeight: 600, marginBottom: 8, borderBottom: '1px solid #f0f0f0', paddingBottom: 6 }}>
           {record.firstName} {record.lastName}
-          <span style={{ fontWeight: 400, color: '#999', marginLeft: 8 }}>{record.id}</span>
         </div>
 
         <div style={{ marginBottom: 8 }}>
@@ -163,6 +301,17 @@ const Schedule: React.FC = () => {
           </div>
         )}
 
+        {timeOffDates.length > 0 && (
+          <div style={{ marginBottom: 8 }}>
+            <div style={{ color: '#999', fontSize: 11, marginBottom: 2 }}>Time Off</div>
+            <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+              {timeOffDates.map(d => (
+                <Tag key={d} color="orange" style={{ margin: 0 }}>{d}</Tag>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div style={{ borderTop: '1px solid #f0f0f0', paddingTop: 6 }}>
           <div style={{ color: '#999', fontSize: 11, marginBottom: 2 }}>This Week</div>
           <span style={{ fontWeight: 600, color: '#389e0d' }}>{totalDays} day{totalDays !== 1 ? 's' : ''}</span>
@@ -193,13 +342,14 @@ const Schedule: React.FC = () => {
       title: 'Last Name',
       key: 'lastName',
       width: 120,
+      minWidth: 120,
       fixed: 'left' as const,
       render: (_: any, record: DealerDTO) => (
         <Popover
           content={() => renderDealerPopover(record)}
           trigger="hover"
           placement="right"
-          onOpenChange={open => { if (open) fetchAvailability(record.id); }}
+          onOpenChange={open => { if (open) fetchAvailability(record.id, record.eeNumber); }}
         >
           <span style={{ cursor: 'pointer', borderBottom: '1px dashed #bfbfbf' }}>{record.lastName}</span>
         </Popover>
@@ -209,6 +359,7 @@ const Schedule: React.FC = () => {
       title: 'First Name',
       key: 'firstName',
       width: 110,
+      minWidth: 110,
       fixed: 'left' as const,
       render: (_: any, record: DealerDTO) => record.firstName,
     },
@@ -216,7 +367,53 @@ const Schedule: React.FC = () => {
       title: 'EE Number',
       dataIndex: 'eeNumber',
       width: 100,
+      minWidth: 100,
       fixed: 'left' as const,
+    },
+    {
+      title: 'Satisfaction',
+      key: 'satisfaction',
+      width: 110,
+      minWidth: 110,
+      fixed: 'left' as const,
+      align: 'center' as const,
+      sorter: (a: DealerDTO, b: DealerDTO) => {
+        const sa = satisfactionMap.get(a.id)?.score ?? -1;
+        const sb = satisfactionMap.get(b.id)?.score ?? -1;
+        return sa - sb;
+      },
+      render: (_: any, record: DealerDTO) => {
+        const sat = satisfactionMap.get(record.id);
+        if (!sat) return <span style={{ color: '#bfbfbf' }}>-</span>;
+        const color = sat.score >= 80 ? '#52c41a' : sat.score >= 50 ? '#faad14' : '#ff4d4f';
+        const mismatchedShifts = sat.totalShifts - sat.matchedShifts;
+        const tooltipContent = (
+          <div style={{ fontSize: 12 }}>
+            <div style={{ fontWeight: 600, marginBottom: 4 }}>Satisfaction Breakdown</div>
+            <div style={{ marginBottom: 4 }}>
+              Shift: {sat.matchedShifts}/{sat.totalShifts} match
+              {mismatchedShifts > 0 && (
+                <span style={{ color: '#ff4d4f' }}> ({mismatchedShifts} mismatch, pref: {SHIFT_LABELS[sat.shiftPref] || sat.shiftPref})</span>
+              )}
+            </div>
+            {sat.preferredDaysOff.length > 0 && (
+              <div>
+                Days Off: {sat.preferredDaysOff.length - sat.violatedDaysOff.length}/{sat.preferredDaysOff.length} respected
+                {sat.violatedDaysOff.length > 0 && (
+                  <div style={{ color: '#ff4d4f', marginTop: 2 }}>
+                    Violated: {sat.violatedDaysOff.map(v => `${DAY_NAMES[v.day]} ${dayjs(v.date).format('M/D')}`).join(', ')}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        );
+        return (
+          <Tooltip title={tooltipContent} placement="right">
+            <span style={{ cursor: 'pointer', fontWeight: 600, color }}>{sat.score}%</span>
+          </Tooltip>
+        );
+      },
     },
     ...weekDates.map(date => {
       const dateStr = date.format('YYYY-MM-DD');
@@ -229,6 +426,7 @@ const Schedule: React.FC = () => {
           </div>
         ),
         width: 80,
+        minWidth: 80,
         align: 'center' as const,
         onHeaderCell: () => ({
           style: { background: isWeekend ? '#fff7e6' : undefined },
@@ -278,6 +476,38 @@ const Schedule: React.FC = () => {
         alignItems: 'center', flexWrap: 'wrap',
       }}>
         <WeekPicker />
+        <Input.Search
+          placeholder="Search by name or EE Number"
+          allowClear
+          style={{ width: 220 }}
+          onSearch={v => setSearchText(v.trim())}
+          onChange={e => { if (!e.target.value) setSearchText(''); }}
+        />
+        <Select
+          placeholder="Filter by Shift"
+          allowClear
+          style={{ width: 160 }}
+          value={shiftFilter}
+          onChange={v => { setShiftFilter(v || null); setPage(1); }}
+          options={[
+            { label: 'Day Shift (9AM)', value: 'day' },
+            { label: 'Swing Shift (4PM)', value: 'swing' },
+          ]}
+        />
+        <Button
+          icon={eeSortOrder === 'desc' ? <SortDescendingOutlined /> : <SortAscendingOutlined />}
+          onClick={() => {
+            setEeSortOrder(prev => {
+              if (prev === null) return 'asc';
+              if (prev === 'asc') return 'desc';
+              return null;
+            });
+          }}
+          type={eeSortOrder ? 'primary' : 'default'}
+          ghost={!!eeSortOrder}
+        >
+          EE# {eeSortOrder === 'asc' ? '↑' : eeSortOrder === 'desc' ? '↓' : ''}
+        </Button>
         <div style={{ flex: 1 }} />
         {entries.length > 0 && (
           <Button
@@ -302,6 +532,26 @@ const Schedule: React.FC = () => {
           >
             {downloading ? 'Generating...' : 'Download Excel'}
           </Button>
+        )}
+        {entries.length > 0 && (
+          <Popconfirm
+            title="Clear Schedule"
+            description={`Are you sure you want to clear all schedules for ${weekStartStr} ~ ${weekEndStr}?`}
+            onConfirm={async () => {
+              try {
+                await scheduleApi.delete(weekStartStr, activeTab);
+                message.success('Schedule cleared');
+                fetchData();
+              } catch {
+                message.error('Failed to clear schedule');
+              }
+            }}
+            okText="Confirm"
+            cancelText="Cancel"
+            okButtonProps={{ danger: true }}
+          >
+            <Button danger icon={<DeleteOutlined />}>Clear</Button>
+          </Popconfirm>
         )}
       </div>
 
@@ -336,21 +586,56 @@ const Schedule: React.FC = () => {
         </Card>
       </div>
 
+      {/* Shortage alerts */}
+      {shortages.length > 0 && (
+        <Card
+          size="small"
+          style={{ marginBottom: 16, borderLeft: '3px solid #ff4d4f' }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+            <WarningOutlined style={{ color: '#ff4d4f', fontSize: 16 }} />
+            <span style={{ fontWeight: 600, color: '#ff4d4f' }}>
+              Coverage Shortage ({shortages.reduce((s, x) => s + x.short, 0)} dealers short)
+            </span>
+          </div>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {shortages.map(s => (
+              <Tag
+                key={`${s.date}_${s.shift}`}
+                color="red"
+                style={{ margin: 0 }}
+              >
+                {dayjs(s.date).format('ddd M/D')} {s.shift} : {s.assigned}/{s.needed} (short {s.short})
+              </Tag>
+            ))}
+          </div>
+        </Card>
+      )}
+
       <Tabs
         activeKey={activeTab}
         onChange={key => setActiveTab(key as DealerType)}
         items={tabItems}
       />
 
-      <Table
-        columns={columns}
-        dataSource={filteredDealers}
-        rowKey="id"
-        size="small"
-        loading={loading}
-        scroll={{ x: 330 + weekDates.length * 80, y: 600 }}
-        pagination={{ pageSize: 50, showSizeChanger: true, pageSizeOptions: ['50', '100', '200'], showTotal: t => `${t} dealers` }}
-      />
+      {!loading && filteredDealers.length === 0 ? (
+        <Empty description="No schedule data" style={{ padding: 60 }} />
+      ) : (
+        <Table
+          columns={columns}
+          dataSource={filteredDealers}
+          rowKey="id"
+          size="small"
+          loading={loading}
+          scroll={{ x: 120 + 110 + 100 + 110 + weekDates.length * 80, y: 600 }}
+          pagination={{
+            current: page, pageSize, showSizeChanger: true,
+            pageSizeOptions: ['50', '100', '200'],
+            showTotal: t => `${t} dealers`,
+            onChange: (p, s) => { setPage(p); setPageSize(s); },
+          }}
+        />
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import {
-  Table, Button, DatePicker, Input, Select, Modal, Form, message, Popconfirm, Card,
+  Table, Button, DatePicker, Input, Select, Modal, Form, message, Popconfirm, Card, Empty,
 } from 'antd';
 import {
   PlusOutlined, DeleteOutlined, CalendarOutlined, ClockCircleOutlined, TeamOutlined,
@@ -13,7 +13,7 @@ import { dealersApi } from '../api/dealers';
 
 const { RangePicker } = DatePicker;
 
-interface TimeOffRow { id: string; dealerId: string; startDate: string; endDate: string; reason: string; status: string; submittedAt: string; }
+interface TimeOffRow { id: string; dealerId: string; dealerName?: string; eeNumber?: string | null; startDate: string; endDate: string; reason: string; status: string; submittedAt: string; }
 
 const TimeOff: React.FC = () => {
   const { weekStartStr } = useWeek();
@@ -40,14 +40,18 @@ const TimeOff: React.FC = () => {
 
   useEffect(() => {
     dealersApi.list({ size: 200 }).then(res => {
-      setDealerOptions(res.data.data.map(d => ({ value: d.id, label: `${d.firstName} ${d.lastName} (${d.id})` })));
+      setDealerOptions(res.data.data.filter(d => d.eeNumber).map(d => ({ value: d.eeNumber!, label: `${d.firstName} ${d.lastName} (${d.eeNumber})` })));
     }).catch(() => {});
   }, []);
 
   const filtered = useMemo(() => {
     if (!searchText) return requests;
     const s = searchText.toLowerCase();
-    return requests.filter(r => r.dealerId.toLowerCase().includes(s));
+    return requests.filter(r =>
+      r.dealerId.toLowerCase().includes(s) ||
+      (r.dealerName || '').toLowerCase().includes(s) ||
+      (r.eeNumber || '').toLowerCase().includes(s)
+    );
   }, [requests, searchText]);
 
   const uniqueDealers = useMemo(() => new Set(filtered.map(r => r.dealerId)).size, [filtered]);
@@ -57,7 +61,7 @@ const TimeOff: React.FC = () => {
       const values = await form.validateFields();
       const [start, end] = values.dateRange;
       await timeOffApi.create({
-        dealerId: values.dealerId,
+        eeNumber: values.dealerId,
         startDate: start.format('YYYY-MM-DD'),
         endDate: end.format('YYYY-MM-DD'),
         reason: values.reason,
@@ -82,7 +86,8 @@ const TimeOff: React.FC = () => {
   };
 
   const columns: ColumnsType<TimeOffRow> = [
-    { title: 'EE Number', dataIndex: 'dealerId', width: 100 },
+    { title: 'Dealer', width: 150, render: (_, r) => r.dealerName || r.dealerId, sorter: (a, b) => (a.dealerName || a.dealerId).localeCompare(b.dealerName || b.dealerId) },
+    { title: 'EE Number', dataIndex: 'eeNumber', width: 100 },
     { title: 'Start Date', dataIndex: 'startDate', width: 120, sorter: (a, b) => a.startDate.localeCompare(b.startDate) },
     { title: 'End Date', dataIndex: 'endDate', width: 120 },
     { title: 'Reason', dataIndex: 'reason', width: 140 },
@@ -103,7 +108,7 @@ const TimeOff: React.FC = () => {
         <WeekPicker />
         <div style={{ flex: 1 }} />
         <Input.Search
-          placeholder="Search by EE Number"
+          placeholder="Search by name or EE Number"
           allowClear
           style={{ width: 220 }}
           onSearch={v => setSearchText(v.trim())}
@@ -144,14 +149,18 @@ const TimeOff: React.FC = () => {
         </Card>
       </div>
 
-      <Table
-        columns={columns}
-        dataSource={filtered}
-        rowKey="id"
-        size="small"
-        loading={loading}
-        pagination={{ pageSize: 20, showSizeChanger: true }}
-      />
+      {!loading && filtered.length === 0 ? (
+        <Empty description="No time off requests" style={{ padding: 60 }} />
+      ) : (
+        <Table
+          columns={columns}
+          dataSource={filtered}
+          rowKey="id"
+          size="small"
+          loading={loading}
+          pagination={{ pageSize: 20, showSizeChanger: true, pageSizeOptions: ['20', '50', '100'], showTotal: t => `${t} records` }}
+        />
+      )}
 
       <Modal
         title="Add Time Off Request"

@@ -10,6 +10,7 @@ import {
   LogoutOutlined,
 } from '@ant-design/icons';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import NotificationBell from '../components/NotificationBell';
 
 const { Sider, Content, Header } = Layout;
 
@@ -62,7 +63,10 @@ const MainLayout: React.FC<{ onLogout?: () => void }> = ({ onLogout }) => {
           borderBottom: '1px solid #f0f0f0',
         }}>
           <h2 style={{ margin: 0, fontSize: 18 }}>WSOP Dealer Scheduler</h2>
-          {onLogout && <Button icon={<LogoutOutlined />} onClick={onLogout} type="text">Logout</Button>}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <NotificationBell />
+            {onLogout && <Button icon={<LogoutOutlined />} onClick={onLogout} type="text">Logout</Button>}
+          </div>
         </Header>
         <Content style={{ margin: 16, padding: 24, background: '#fff', borderRadius: 8 }}>
           <Outlet />

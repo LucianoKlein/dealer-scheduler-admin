@@ -83,7 +83,7 @@ const Review: React.FC = () => {
           dataSource={submissions}
           rowKey="id"
           size="small"
-          pagination={{ pageSize: 20, showSizeChanger: true }}
+          pagination={{ pageSize: 20, showSizeChanger: true, pageSizeOptions: ['20', '50', '100'], showTotal: t => `${t} records` }}
         />
       )}
     </div>

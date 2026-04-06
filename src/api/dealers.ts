@@ -30,6 +30,6 @@ export const dealersApi = {
 
   delete: (id: string) => client.delete(`/dealers/${id}`),
 
-  availability: (dealerId: string, weekStart: string) =>
-    client.get(`/dealers/${dealerId}/availability`, { params: { week_start: weekStart } }),
+  availability: (eeNumber: string, weekStart: string) =>
+    client.get(`/dealers/ee/${eeNumber}/availability`, { params: { week_start: weekStart } }),
 };

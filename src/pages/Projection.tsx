@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Select, Button, InputNumber, message, Switch, Card, Tag, Table, Empty, Modal, Alert,
+  Select, Button, InputNumber, message, Switch, Card, Tag, Table, Empty, Modal, Alert, Progress, Popconfirm, Spin,
 } from 'antd';
 import {
-  SaveOutlined, SettingOutlined, EditOutlined, PlusOutlined, DeleteOutlined,
+  SaveOutlined, SettingOutlined, EditOutlined, PlusOutlined, DeleteOutlined, ClearOutlined,
   TeamOutlined, TrophyOutlined, ThunderboltOutlined,
   DownloadOutlined, WarningOutlined,
 } from '@ant-design/icons';
@@ -17,6 +17,13 @@ import { projectionApi } from '../api/projection';
 import { scheduleApi } from '../api/schedule';
 import { timeOffApi } from '../api/timeOff';
 import gameData from '../assets/game.json';
+
+const statusAlert = (s: string) => {
+  if (s === 'OPTIMAL' || s === 'CLOUD_OPTIMAL') return { label: 'Optimal', color: '#52c41a', type: 'success', desc: 'Optimal solution found. All constraints satisfied.' };
+  if (s === 'FEASIBLE' || s === 'CLOUD_FEASIBLE') return { label: 'Feasible', color: '#faad14', type: 'warning', desc: 'Feasible solution found, but may not be optimal. Please review the schedule.' };
+  if (s === 'INFEASIBLE' || s === 'CLOUD_INFEASIBLE') return { label: 'Failed', color: '#ff4d4f', type: 'error', desc: 'Unable to satisfy all constraints. Please adjust demand or staffing.' };
+  return { label: 'Unknown', color: '#999', type: 'info', desc: 'Solver returned an unknown status. Please contact the administrator.' };
+};
 
 dayjs.extend(customParseFormat);
 
@@ -36,16 +43,18 @@ const Projection: React.FC = () => {
   const { weekStart, weekStartStr } = useWeek();
   const navigate = useNavigate();
   const [projection, setProjection] = useState<WeeklyProjection>({ weekStart: '', days: [] });
+  const [loading, setLoading] = useState(false);
   const [hideUnedited, setHideUnedited] = useState(false);
   const [editing, setEditing] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [generated, setGenerated] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [downloading, setDownloading] = useState(false);
-  const [lastResult, setLastResult] = useState<{ totalAssignments: number; unfilledSlots: number; solverStatus: string; solveTimeMs: number } | null>(null);
+  const [lastResult, setLastResult] = useState<{ totalAssignments: number; unfilledSlots: number; solverStatus: string; solveTimeMs: number; stats?: { fullySatisfied: number; partiallySatisfied: number; unsatisfied: number; totalWithPreference: number; unfilledBreakdown: any[] } | null } | null>(null);
 
   useEffect(() => {
     const loadProjection = async () => {
+      setLoading(true);
       try {
         const res = await projectionApi.get(weekStartStr);
         setProjection(res.data);
@@ -56,6 +65,8 @@ const Projection: React.FC = () => {
           days.push({ date: weekStart.add(i, 'day').format('YYYY-MM-DD'), slots: [] });
         }
         setProjection({ weekStart: weekStartStr, days });
+      } finally {
+        setLoading(false);
       }
     };
     loadProjection();
@@ -102,7 +113,23 @@ const Projection: React.FC = () => {
     }
   };
 
+  const handleClear = async () => {
+    try {
+      await projectionApi.delete(weekStartStr);
+      const days: DailyProjection[] = [];
+      for (let i = 0; i < 7; i++) {
+        days.push({ date: weekStart.add(i, 'day').format('YYYY-MM-DD'), slots: [] });
+      }
+      setProjection({ weekStart: weekStartStr, days });
+      setEditing(false);
+      message.success('Projection cleared');
+    } catch {
+      message.error('Failed to clear projection');
+    }
+  };
+
   // Totals
+  const totalSlots = projection.days.reduce((s, d) => s + d.slots.length, 0);
   const totalDealers = projection.days.reduce((s, d) => s + d.slots.reduce((ss, sl) => ss + sl.dealersNeeded, 0), 0);
   const avgDealersPerDay = (totalDealers / 7).toFixed(1);
 
@@ -115,19 +142,55 @@ const Projection: React.FC = () => {
   }, [weekStartStr]);
 
   const [resultModalOpen, setResultModalOpen] = useState(false);
+  const [realProgress, setRealProgress] = useState(0);
+  const [progressPhase, setProgressPhase] = useState('');
+  const pollTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const stopPolling = useCallback(() => {
+    if (pollTimer.current) {
+      clearInterval(pollTimer.current);
+      pollTimer.current = null;
+    }
+  }, []);
 
   const generateSchedule = async () => {
     setGenerating(true);
+    setRealProgress(0);
+    setProgressPhase('Submitting task...');
     try {
       const res = await scheduleApi.generate({ weekStart: weekStartStr, dealerType: 'tournament' });
-      setLastResult(res.data);
-      setConfirmOpen(false);
-      setGenerated(true);
-      setResultModalOpen(true);
+      const taskId = res.data.taskId;
+      // Start polling
+      pollTimer.current = setInterval(async () => {
+        try {
+          const poll = await scheduleApi.taskStatus(taskId);
+          const t = poll.data;
+          setRealProgress(t.progress);
+          setProgressPhase(t.phase);
+          if (t.status === 'completed' && t.result) {
+            stopPolling();
+            setRealProgress(100);
+            setLastResult(t.result);
+            setConfirmOpen(false);
+            setGenerated(true);
+            setGenerating(false);
+            setResultModalOpen(true);
+          } else if (t.status === 'failed') {
+            stopPolling();
+            setRealProgress(0);
+            setGenerating(false);
+            message.error(t.error || 'Schedule generation failed');
+          }
+        } catch {
+          stopPolling();
+          setGenerating(false);
+          message.error('Failed to poll task status');
+        }
+      }, 2000);
     } catch {
-      message.error('Failed to generate schedule');
-    } finally {
+      setRealProgress(0);
       setGenerating(false);
+      message.error('Failed to start schedule generation');
     }
   };
 
@@ -229,6 +292,18 @@ const Projection: React.FC = () => {
             Edit
           </Button>
         )}
+        {totalDealers > 0 && (
+          <Popconfirm
+            title="Clear Projection"
+            description="Are you sure you want to clear all projection data for this week?"
+            onConfirm={handleClear}
+            okText="Confirm"
+            cancelText="Cancel"
+            okButtonProps={{ danger: true }}
+          >
+            <Button danger icon={<ClearOutlined />}>Clear</Button>
+          </Popconfirm>
+        )}
         <Button
           type="primary"
           icon={<ThunderboltOutlined />}
@@ -266,6 +341,7 @@ const Projection: React.FC = () => {
       </div>
 
       {/* Day cards */}
+      <Spin spinning={loading}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {visibleDays.length === 0 && (
           <Card><Empty description="No events" /></Card>
@@ -421,7 +497,7 @@ const Projection: React.FC = () => {
           );
         })}
       </div>
-
+      </Spin>
       {/* Generate Schedule Confirmation Modal */}
       <Modal
         title="Generate Schedule Confirmation"
@@ -431,8 +507,8 @@ const Projection: React.FC = () => {
         okText={generating ? 'Generating...' : 'Confirm & Generate'}
         okButtonProps={{ loading: generating }}
         cancelButtonProps={{ disabled: generating }}
-        closable={!generating}
-        maskClosable={!generating}
+        closable
+        maskClosable={false}
         width={600}
       >
         <div style={{ marginBottom: 16 }}>
@@ -449,11 +525,18 @@ const Projection: React.FC = () => {
             ]}
           />
           <div style={{ marginTop: 8, color: '#666', fontSize: 13 }}>
-            Total: {totalDealers} dealers needed (avg {avgDealersPerDay}/day)
+            Total: {totalDealers} dealer-shifts needed (avg {avgDealersPerDay} dealers/day)
           </div>
         </div>
 
-        {pendingTimeOffCount > 0 && (
+        {generating && (
+          <div style={{ marginTop: 16 }}>
+            <Progress percent={realProgress} status="active" strokeColor={{ from: '#108ee9', to: '#87d068' }} />
+            {progressPhase && <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>{progressPhase}</div>}
+          </div>
+        )}
+
+        {pendingTimeOffCount > 0 && !generating && (
           <Alert
             type="warning"
             showIcon
@@ -473,7 +556,7 @@ const Projection: React.FC = () => {
 
       {/* Generate Result Modal */}
       <Modal
-        title="Schedule Generated Successfully"
+        title="Schedule Generated"
         open={resultModalOpen}
         onCancel={() => setResultModalOpen(false)}
         footer={[
@@ -484,15 +567,15 @@ const Projection: React.FC = () => {
             View Schedule
           </Button>,
         ]}
-        width={480}
+        width={560}
       >
         {lastResult && (
           <div style={{ padding: '8px 0' }}>
             <Alert
-              type="success"
+              type={statusAlert(lastResult.solverStatus).type as any}
               showIcon
-              message="Schedule has been generated successfully."
-              description="You can download the Excel file or navigate to the Schedule page to review and publish."
+              message={statusAlert(lastResult.solverStatus).label}
+              description={statusAlert(lastResult.solverStatus).desc}
               style={{ marginBottom: 16 }}
             />
             {lastResult.unfilledSlots > 0 && (
@@ -500,25 +583,56 @@ const Projection: React.FC = () => {
                 type="warning"
                 showIcon
                 icon={<WarningOutlined />}
-                message={`${lastResult.unfilledSlots} unfilled slot(s) remain`}
-                description="Some shifts could not be fully staffed. Please review the schedule and adjust manually if needed."
+                message={`${lastResult.unfilledSlots} unfilled shifts`}
+                description="Some shifts are not fully staffed. Please review the schedule and adjust manually."
                 style={{ marginBottom: 16 }}
               />
             )}
             <div style={{ display: 'flex', gap: 24, marginBottom: 16 }}>
               <div>
-                <div style={{ fontSize: 12, color: '#999' }}>Total Assignments</div>
+                <div style={{ fontSize: 12, color: '#999' }}>Total Shifts</div>
                 <div style={{ fontSize: 28, fontWeight: 700, color: '#52c41a' }}>{lastResult.totalAssignments}</div>
               </div>
               <div>
-                <div style={{ fontSize: 12, color: '#999' }}>Solver Status</div>
-                <div style={{ fontSize: 28, fontWeight: 700, color: lastResult.solverStatus === 'OPTIMAL' ? '#52c41a' : '#faad14' }}>
-                  {lastResult.solverStatus}
+                <div style={{ fontSize: 12, color: '#999' }}>Schedule Status</div>
+                <div style={{ fontSize: 28, fontWeight: 700, color: statusAlert(lastResult.solverStatus).color }}>
+                  {statusAlert(lastResult.solverStatus).label}
                 </div>
               </div>
             </div>
+            {lastResult.stats && (
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 8 }}>Satisfaction Stats</div>
+                <div style={{ display: 'flex', gap: 16 }}>
+                  <div style={{ flex: 1, background: '#f6ffed', borderRadius: 6, padding: '8px 12px', textAlign: 'center' }}>
+                    <div style={{ fontSize: 20, fontWeight: 700, color: '#52c41a' }}>{lastResult.stats.fullySatisfied}</div>
+                    <div style={{ fontSize: 11, color: '#999' }}>Fully Satisfied</div>
+                  </div>
+                  <div style={{ flex: 1, background: '#fffbe6', borderRadius: 6, padding: '8px 12px', textAlign: 'center' }}>
+                    <div style={{ fontSize: 20, fontWeight: 700, color: '#faad14' }}>{lastResult.stats.partiallySatisfied}</div>
+                    <div style={{ fontSize: 11, color: '#999' }}>Partially Satisfied</div>
+                  </div>
+                  <div style={{ flex: 1, background: '#fff2f0', borderRadius: 6, padding: '8px 12px', textAlign: 'center' }}>
+                    <div style={{ fontSize: 20, fontWeight: 700, color: '#ff4d4f' }}>{lastResult.stats.unsatisfied}</div>
+                    <div style={{ fontSize: 11, color: '#999' }}>Unsatisfied</div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {lastResult.stats?.unfilledBreakdown && lastResult.stats.unfilledBreakdown.length > 0 && (
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 8 }}>Unfilled Details</div>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                  {lastResult.stats.unfilledBreakdown.map((u: any) => (
+                    <span key={`${u.date}_${u.shift}`} style={{ background: '#fff2f0', color: '#ff4d4f', borderRadius: 4, padding: '2px 8px', fontSize: 12 }}>
+                      {u.date} {u.shift}: {u.assigned}/{u.needed} (gap {u.gap})
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
             <div style={{ fontSize: 13, color: '#666' }}>
-              Solved in {lastResult.solveTimeMs}ms.
+              Solve time: {lastResult.solveTimeMs}ms
             </div>
           </div>
         )}

@@ -27,14 +27,15 @@ const MySchedule: React.FC = () => {
     const load = async () => {
       setLoading(true);
       try {
-        const [dRes, sRes] = await Promise.all([
-          client.get(`/dealers/${dealerId}`),
-          client.get(`/dealers/${dealerId}/schedule`, { params: { week_start: ws } }),
-        ]);
+        const dRes = await client.get(`/dealers/${dealerId}`);
         setDealer(dRes.data);
-        setEntries(sRes.data.entries || []);
-        setDaysOff(sRes.data.daysOff || []);
-        setTimeOff(sRes.data.timeOff || []);
+        const ee = dRes.data.eeNumber;
+        if (ee) {
+          const sRes = await client.get(`/dealers/ee/${ee}/schedule`, { params: { week_start: ws } });
+          setEntries(sRes.data.entries || []);
+          setDaysOff(sRes.data.daysOff || []);
+          setTimeOff(sRes.data.timeOff || []);
+        }
       } catch {
         setDealer(null);
       } finally {
