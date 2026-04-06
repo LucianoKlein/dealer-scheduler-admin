@@ -129,7 +129,6 @@ const Projection: React.FC = () => {
   };
 
   // Totals
-  const totalSlots = projection.days.reduce((s, d) => s + d.slots.length, 0);
   const totalDealers = projection.days.reduce((s, d) => s + d.slots.reduce((ss, sl) => ss + sl.dealersNeeded, 0), 0);
   const avgDealersPerDay = (totalDealers / 7).toFixed(1);
 
