@@ -59,10 +59,23 @@ const Projection: React.FC = () => {
         const res = await projectionApi.get(weekStartStr);
         setProjection(res.data);
       } catch {
-        // No projection yet, init empty
+        // No projection yet, auto-generate slots from events
         const days: DailyProjection[] = [];
         for (let i = 0; i < 7; i++) {
-          days.push({ date: weekStart.add(i, 'day').format('YYYY-MM-DD'), slots: [] });
+          const dateStr = weekStart.add(i, 'day').format('YYYY-MM-DD');
+          const events = gameEventsByDate[dateStr] || [];
+          const slotTimeSet = new Set<string>();
+          const slots: TimeSlot[] = [];
+          for (const evt of events) {
+            const parsed = dayjs(`${evt.date} ${YEAR}`, 'MMM DD hh:mm A YYYY');
+            if (!parsed.isValid()) continue;
+            const shifted = parsed.subtract(1, 'hour');
+            const timeLabel = shifted.format('h A'); // e.g. "11 AM"
+            if (slotTimeSet.has(timeLabel)) continue;
+            slotTimeSet.add(timeLabel);
+            slots.push({ time: timeLabel, dealersNeeded: 0 });
+          }
+          days.push({ date: dateStr, slots });
         }
         setProjection({ weekStart: weekStartStr, days });
       } finally {

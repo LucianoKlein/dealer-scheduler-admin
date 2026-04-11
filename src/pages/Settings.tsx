@@ -28,6 +28,7 @@ const GROUPS: GroupDef[] = [
   { title: 'Ride Share Matching (S4)', color: '#13c2c2', icon: <CarOutlined />, keys: ['ride_share_mismatch'] },
   { title: 'Minimum One Shift (S5)', color: '#eb2f96', icon: <SafetyOutlined />, keys: ['min_one_shift_reward'] },
   { title: 'Fairness (S6)', color: '#fa541c', icon: <BarChartOutlined />, keys: ['fairness_gap_penalty'] },
+  { title: 'Overtime & Float (S7)', color: '#2f54eb', icon: <FieldTimeOutlined />, keys: ['overtime_flex_pct', 'shift_float_hours'] },
 ];
 
 const Settings: React.FC = () => {

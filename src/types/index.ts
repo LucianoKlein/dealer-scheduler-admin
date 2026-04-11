@@ -94,7 +94,7 @@ export interface AvailabilitySubmission {
 }
 
 // Employee request management - matches user-side submission model
-export type ShiftType = 'day' | 'swing' | 'mixed';
+export type ShiftType = 'day' | 'swing' | 'night' | 'mixed';
 export type ShiftPreference = 'prefer_day' | 'prefer_swing' | 'no_preference';
 
 export interface AvailabilityRequest {

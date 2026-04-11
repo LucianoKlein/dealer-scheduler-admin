@@ -17,6 +17,18 @@ interface ScheduleEntryDTO { dealerId: string; date: string; shift: string; }
 interface TimeOffDTO { id: string; dealerId: string; startDate: string; endDate: string; status: string; }
 interface AvailDTO { shift: string; preferredDaysOff: number[]; }
 
+/** Map projection time string to shift, matching backend _time_to_shift logic. */
+function timeToShift(time: string): string {
+  const m = time.trim().toUpperCase().match(/^(\d{1,2})\s*(AM|PM)$/);
+  if (!m) return '8AM';
+  let h24 = parseInt(m[1], 10);
+  if (m[2] === 'AM') { if (h24 === 12) h24 = 0; }
+  else { if (h24 !== 12) h24 += 12; }
+  if (h24 < 13) return '8AM';
+  if (h24 < 18) return '4PM';
+  return '8PM';
+}
+
 const Schedule: React.FC = () => {
   const { weekStart, weekStartStr, weekEndStr } = useWeek();
   const [activeTab, setActiveTab] = useState<DealerType>('tournament');
@@ -132,7 +144,8 @@ const Schedule: React.FC = () => {
     }
     // Shift type filter: only show dealers who have at least one entry matching the selected shift
     if (shiftFilter) {
-      const shiftValue = shiftFilter === 'day' ? '9AM' : '4PM';
+      const shiftValueMap: Record<string, string> = { day: '8AM', swing: '4PM', night: '8PM' };
+      const shiftValue = shiftValueMap[shiftFilter];
       const matchingDealerIds = new Set(entries.filter(e => e.shift === shiftValue).map(e => e.dealerId));
       list = list.filter(d => matchingDealerIds.has(d.id));
     }
@@ -167,9 +180,7 @@ const Schedule: React.FC = () => {
     const demandMap = new Map<string, number>();
     projectionData.forEach(day => {
       (day.slots || []).forEach(slot => {
-        const timeStr = slot.time.toUpperCase().replace(/\s+/g, '');
-        // Match backend logic: time contains 9/10/11/12 -> 9AM, otherwise -> 4PM
-        const shift = /(?:^|\D)(9|10|11|12)(?:\D|$)/.test(timeStr) ? '9AM' : '4PM';
+        const shift = timeToShift(slot.time);
         const key = `${day.date}_${shift}`;
         demandMap.set(key, (demandMap.get(key) || 0) + slot.dealersNeeded);
       });
@@ -193,8 +204,8 @@ const Schedule: React.FC = () => {
   }, [projectionData, entries]);
 
   const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const SHIFT_LABELS: Record<string, string> = { day: 'Day (AM)', swing: 'Swing (PM)', mixed: 'Mixed' };
-  const SHIFT_MAP: Record<string, string> = { '9AM': 'day', '4PM': 'swing' };
+  const SHIFT_LABELS: Record<string, string> = { day: 'Day (8AM)', swing: 'Swing (4PM)', night: 'Night (8PM)', mixed: 'Mixed' };
+  const SHIFT_MAP: Record<string, string> = { '8AM': 'day', '4PM': 'swing', '8PM': 'night' };
 
   // Per-dealer satisfaction calculation
   const satisfactionMap = useMemo(() => {
@@ -215,8 +226,15 @@ const Schedule: React.FC = () => {
       const dealerEntries = entries.filter(e => e.dealerId === d.id);
       if (dealerEntries.length === 0) return;
 
-      // Shift match
-      const matchedShifts = dealerEntries.filter(e => SHIFT_MAP[e.shift] === avail.shift).length;
+      // Shift match (with 2-hour float tolerance)
+      const SHIFT_HOURS: Record<string, number> = { '8AM': 8, '4PM': 16, '8PM': 20 };
+      const PREF_TO_SHIFT: Record<string, string> = { day: '8AM', swing: '4PM', night: '8PM' };
+      const prefCode = PREF_TO_SHIFT[avail.shift];
+      const matchedShifts = dealerEntries.filter(e => {
+        if (SHIFT_MAP[e.shift] === avail.shift) return true;
+        if (!prefCode || !SHIFT_HOURS[e.shift]) return false;
+        return Math.abs(SHIFT_HOURS[e.shift] - SHIFT_HOURS[prefCode]) <= 2;
+      }).length;
       const shiftScore = matchedShifts / dealerEntries.length;
 
       // Days off match
@@ -490,8 +508,9 @@ const Schedule: React.FC = () => {
           value={shiftFilter}
           onChange={v => { setShiftFilter(v || null); setPage(1); }}
           options={[
-            { label: 'Day Shift (9AM)', value: 'day' },
+            { label: 'Day Shift (8AM)', value: 'day' },
             { label: 'Swing Shift (4PM)', value: 'swing' },
+            { label: 'Night Shift (8PM)', value: 'night' },
           ]}
         />
         <Button

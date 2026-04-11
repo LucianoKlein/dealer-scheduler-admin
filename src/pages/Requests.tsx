@@ -9,7 +9,7 @@ import WeekPicker from '../components/WeekPicker';
 import { adminRequestsApi } from '../api/schedule';
 import { timeOffApi } from '../api/timeOff';
 
-const shiftLabels: Record<ShiftType, string> = { day: 'Day Shift', swing: 'Swing Shift', mixed: 'Mixed Game Shift' };
+const shiftLabels: Record<ShiftType, string> = { day: 'Day Shift', swing: 'Swing Shift', night: 'Night Shift', mixed: 'Mixed Game Shift' };
 const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const statusColor: Record<string, string> = { pending: 'orange', approved: 'green', rejected: 'red' };
 
